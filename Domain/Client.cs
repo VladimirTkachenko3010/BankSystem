@@ -44,7 +44,7 @@ namespace Domain
         /// </summary>
         /// <param name="reciepent">receiepent of money</param>
         /// <param name="amount">transfer money amount</param>
-        /// <param name="msg">message after method</param>
+        /// <param name="msg">transfer message</param>
         /// <returns></returns>
         public virtual (decimal Balance, string msg) Transfer(Client reciepent, decimal amount, string msg)
         {
@@ -67,6 +67,53 @@ namespace Domain
                 msg = "The recipient with the specified account number was not found.";
                 return (Balance, msg);
             }
+        }
+
+        /// <summary>
+        /// Virtual method of the basic logic of opening a deposit.
+        /// </summary>
+        /// <param name="amount">deposit amount of money</param>
+        /// <param name="msg">open deposit message</param>
+        /// <returns></returns>
+        public virtual (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
+        {
+            if (amount < MinDepAmount)
+            {
+                msg = $"Insufficient deposit opening amount. Minimum amount = {MinDepAmount}";
+                return (0, msg);
+            }
+
+            //generation of a unique deposit number
+            string depNumber = GenerateDepLoanNumber();
+            decimal interestRate = CalcInterestRate();
+
+            //Balance update
+            Balance += amount;
+
+            msg = $"A deposit of {amount} hryvnias has been successfully opened.\n"
+                + $"Interest rate: {interestRate}.\n"
+                + $"Deposit number: {depNumber}.";
+            return (Balance, msg);
+        }
+
+
+        /// <summary>
+        /// Base calculation of Interest Rate
+        /// </summary>
+        /// <returns></returns>
+        protected virtual decimal CalcInterestRate()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Generation of deposit or loan number
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GenerateDepLoanNumber()
+        {
+            // генерация ун кода номера вклада
+            return Guid.NewGuid().ToString();
         }
     }
 
