@@ -96,6 +96,31 @@ namespace Domain
             return (Balance, msg);
         }
 
+        /// <summary>
+        /// Virtual method of the basic logic for requesting a loan
+        /// </summary>
+        /// <param name="amount">loan amount</param>
+        /// <param name="msg">message after loan operation</param>
+        /// <returns></returns>
+        public virtual (decimal Balance, string msg) RequestLoan(decimal amount, string msg)
+        {
+
+            if (amount < MinCreditAmount)
+            {
+                msg = $"Insufficient amount for issuing a loan. Minimum amount = {MinCreditAmount}";
+                return (Balance, msg);
+            }
+            decimal interestRate = CalcInterestRate();
+            string loanNumber = GenerateDepLoanNumber();
+
+            //Balance update
+            Balance += amount;
+
+            msg = $"Credit for the amount of {amount} hryvnias has been successfully issued."
+                + $"Interest rate: {interestRate}%."
+                + $"Loan number: {loanNumber}";
+            return (Balance, msg);
+        }
 
         /// <summary>
         /// Base calculation of Interest Rate
