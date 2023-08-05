@@ -26,26 +26,8 @@ namespace Domain
         /// method to create client LegalEntity
         /// </summary>
         /// <returns></returns>
-        public static LegalEntity CreateLegalEntity(string accountNumber)
+        public static LegalEntity CreateLegalEntity(string name, string accountNumber)
         {
-            //Console.Write("Enter Legal Entity name: ");
-            var name = string.Empty;
-
-            //need to move the excaption to the menu
-            try
-            {
-                name = Console.ReadLine();
-
-                while (string.IsNullOrEmpty(name))
-                {
-                    Console.WriteLine("Name cannot be empty. Please enter a valid Legal Entity name:");
-                    name = Console.ReadLine();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
-            }
             return new LegalEntity(name, accountNumber);
         }
 

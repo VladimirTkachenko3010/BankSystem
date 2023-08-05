@@ -27,27 +27,8 @@ namespace Domain
         /// method to create a VIPClient
         /// </summary>
         /// <returns></returns>
-        public static VIPClient CreateVIPClient(string accountNumber)
+        public static VIPClient CreateVIPClient(string name, string accountNumber)
         {
-            //Console.Write("Enter VIP client name: ");
-            string name = null;
-
-            //need to move the excaption to the menu
-            try
-            {
-                name = Console.ReadLine();
-
-                while (string.IsNullOrEmpty(name))
-                {
-                    Console.WriteLine("Name cannot be empty. Please enter a valid VIP Client name:");
-                    name = Console.ReadLine();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
-            }
-
             return new VIPClient(name, accountNumber);
         }
 

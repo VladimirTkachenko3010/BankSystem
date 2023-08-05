@@ -8,6 +8,8 @@ using Application;
 
 var bank = new Bank<Client>();
 var msg = string.Empty;
+var name = string.Empty;
+
 
 Console.WriteLine("1 - Display clients information");
 Console.WriteLine("2 - Add regular client");
@@ -40,6 +42,7 @@ while (true)
         switch (key)
         {
             case 1:
+
                 foreach (var client in bank.Clients)
                 {
                     Console.WriteLine($"Name: {client.Name}");
@@ -50,15 +53,62 @@ while (true)
                 break;
 
             case 2:
-                bank.AddClient(RegularClient.CreateRegularClient(Bank<Client>.GenerateUniqueAccountNumber()));
+                
+                try
+                {
+                    Console.Write("Enter client name: ");
+                    name = Console.ReadLine();
+
+                    while (string.IsNullOrEmpty(name))
+                    {
+                        Console.WriteLine("Name cannot be empty. Please enter a valid Regular Client name:");
+                        name = Console.ReadLine();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
+                }
+                bank.AddClient(RegularClient.CreateRegularClient(name!, Bank<Client>.GenerateUniqueAccountNumber()));
                 break;
 
             case 3:
-                bank.AddClient(VIPClient.CreateVIPClient(Bank<Client>.GenerateUniqueAccountNumber()));
+
+                try
+                {
+                    Console.Write("Enter VIP client name: ");
+                    name = Console.ReadLine();
+                    while (string.IsNullOrEmpty(name))
+                    {
+                        Console.WriteLine("Name cannot be empty. Please enter a valid VIP Client name:");
+                        name = Console.ReadLine();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
+                }
+                bank.AddClient(VIPClient.CreateVIPClient(name!, Bank<Client>.GenerateUniqueAccountNumber()));
                 break;
 
             case 4:
-                bank.AddClient(LegalEntity.CreateLegalEntity(Bank<Client>.GenerateUniqueAccountNumber()));
+
+                try
+                {
+                    Console.Write("Enter Legal Entity name: ");
+                    name = Console.ReadLine();
+
+                    while (string.IsNullOrEmpty(name))
+                    {
+                        Console.WriteLine("Name cannot be empty. Please enter a valid Legal Entity name:");
+                        name = Console.ReadLine();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
+                }
+                bank.AddClient(LegalEntity.CreateLegalEntity(name!, Bank<Client>.GenerateUniqueAccountNumber()));
                 break;
 
             case 5:
@@ -97,8 +147,6 @@ while (true)
 
                 if (sender != null)
                 {
-                    //need to fix console wrtiline message
-                    
                     Console.WriteLine($"MESSAGE : \n{sender.Transfer(recipient, transferAmount, msg).msg}");
                 }
                 else
@@ -153,8 +201,7 @@ while (true)
                         }
                     } while (true);
 
-                    //need to fix console wrtiline message
-                    Console.WriteLine($"MESSAGE = {loanClient.RequestLoan(loanAmount, msg).msg}");
+                    Console.WriteLine($"MESSAGE : \n{loanClient.RequestLoan(loanAmount, msg).msg}");
                 }
                 else
                 {

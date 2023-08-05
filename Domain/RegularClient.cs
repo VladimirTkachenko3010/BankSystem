@@ -28,27 +28,8 @@ namespace Domain
         /// Static method to create a RegularClient
         /// </summary>
         /// <returns></returns>
-        public static RegularClient CreateRegularClient(string accountNumber)
+        public static RegularClient CreateRegularClient(string name, string accountNumber)
         {
-            //Console.Write("Enter client name: ");
-            var name = string.Empty;
-
-            //need to move the excaption to the menu
-            try
-            {
-                name = Console.ReadLine();
-
-                while (string.IsNullOrEmpty(name))
-                {
-                    Console.WriteLine("Name cannot be empty. Please enter a valid Regular Client name:");
-                    name = Console.ReadLine();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
-            }
-
             return new RegularClient(name, accountNumber);
         }
 
