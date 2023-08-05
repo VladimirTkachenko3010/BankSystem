@@ -116,8 +116,8 @@ namespace Domain
             //Balance update
             Balance += amount;
 
-            msg = $"Credit for the amount of {amount} hryvnias has been successfully issued."
-                + $"Interest rate: {interestRate}%."
+            msg = $"Credit for the amount of {amount} hryvnias has been successfully issued.\n"
+                + $"Interest rate: {interestRate}%.\n"
                 + $"Loan number: {loanNumber}";
             return (Balance, msg);
         }

@@ -58,7 +58,7 @@ namespace Domain
         /// <param name="amount"></param>
         public override (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
         {
-            var (balance, message) = base.OpenDeposit(amount, msg);
+            var (_, message) = base.OpenDeposit(amount, msg);
             message += $"\nVIP client: opening a deposit in the amount of {amount} hryvnias without randomization.";
             return (amount, message);
         }

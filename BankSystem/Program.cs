@@ -42,9 +42,9 @@ while (true)
             case 1:
                 foreach (var client in bank.Clients)
                 {
-                    Console.WriteLine($"Имя: {client.Name}");
-                    Console.WriteLine($"Номер счета: {client.AccountNumber}");
-                    Console.WriteLine($"Баланс: {client.Balance}");
+                    Console.WriteLine($"Name: {client.Name}");
+                    Console.WriteLine($"Account number: {client.AccountNumber}");
+                    Console.WriteLine($"Balance: {client.Balance}");
                     Console.WriteLine();
                 }
                 break;
@@ -98,8 +98,8 @@ while (true)
                 if (sender != null)
                 {
                     //need to fix console wrtiline message
-                    sender.Transfer(recipient, transferAmount, msg);
-                    Console.WriteLine($"MESSAGE = {msg}");
+                    
+                    Console.WriteLine($"MESSAGE : \n{sender.Transfer(recipient, transferAmount, msg).msg}");
                 }
                 else
                 {
@@ -126,7 +126,7 @@ while (true)
                         }
                     } while (true);
 
-                    Console.WriteLine($"MESSAGE = {depositClient.OpenDeposit(depositAmount, msg).msg}");
+                    Console.WriteLine($"MESSAGE : \n{depositClient.OpenDeposit(depositAmount, msg).msg}");
                 }
                 else
                 {
@@ -154,8 +154,7 @@ while (true)
                     } while (true);
 
                     //need to fix console wrtiline message
-                    loanClient.RequestLoan(loanAmount, msg);
-                    Console.WriteLine($"MESSAGE = {msg}");
+                    Console.WriteLine($"MESSAGE = {loanClient.RequestLoan(loanAmount, msg).msg}");
                 }
                 else
                 {
