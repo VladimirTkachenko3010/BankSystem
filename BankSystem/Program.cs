@@ -9,6 +9,7 @@ using Application;
 var bank = new Bank<Client>();
 var msg = string.Empty;
 var name = string.Empty;
+var accountNumber = string.Empty;
 
 
 Console.WriteLine("1 - Display clients information");
@@ -53,7 +54,7 @@ while (true)
                 break;
 
             case 2:
-                
+
                 try
                 {
                     Console.Write("Enter client name: ");
@@ -112,25 +113,61 @@ while (true)
                 break;
 
             case 5:
-                Console.WriteLine("Enter the account number to delete:");
-                var removeClient = bank.FindClientByAccountNumber(Console.ReadLine()!);
-                if (removeClient == null)
+
+                try
                 {
-                    Console.WriteLine("Account not deleted, incorrect account number entry");
-                }
-                else
-                {
-                    bank.RemoveClient(removeClient);
+                    Console.WriteLine("Enter the account number to delete:");
+                    accountNumber = Console.ReadLine();
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    {
+                        Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
+                        accountNumber = Console.ReadLine()!;
+                    }
+                    bank.RemoveClient(bank.FindClientByAccountNumber(accountNumber!));
                     Console.WriteLine("Account deleted");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error while finding by account number. >>{e.Message}  {e.GetType}");
                 }
                 break;
 
             case 6:
 
-                Console.WriteLine("Enter the account number of the sender of funds:");
-                var sender = bank.FindClientByAccountNumber(Console.ReadLine()!);
-                Console.WriteLine("Enter the account number of the recipient of funds:");
-                var recipient = bank.FindClientByAccountNumber(Console.ReadLine()!);
+
+                try
+                {
+                    Console.WriteLine("Enter the account number of the sender of funds:");
+                    accountNumber = Console.ReadLine();
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    {
+                        Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
+                        accountNumber = Console.ReadLine()!;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error while finding by account number. >>{e.Message}  {e.GetType}");
+                }
+                var sender = bank.FindClientByAccountNumber(accountNumber!);
+
+                try
+                {
+                    Console.WriteLine("Enter the account number of the recipient of funds:");
+                    accountNumber = Console.ReadLine();
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    {
+                        Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
+                        accountNumber = Console.ReadLine()!;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error while finding by account number. >>{e.Message}  {e.GetType}");
+                }
+                var recipient = bank.FindClientByAccountNumber(accountNumber!);
+
+
                 decimal transferAmount;
                 do
                 {
@@ -156,8 +193,23 @@ while (true)
                 break;
 
             case 7:
-                Console.WriteLine("Enter the account number to open a deposit:");
-                var depositClient = bank.FindClientByAccountNumber(Console.ReadLine()!);
+
+                try
+                {
+                    Console.WriteLine("Enter the account number to open a deposit:");
+                    accountNumber = Console.ReadLine();
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    {
+                        Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
+                        accountNumber = Console.ReadLine()!;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error while finding by account number. >>{e.Message}  {e.GetType}");
+                }
+
+                var depositClient = bank.FindClientByAccountNumber(accountNumber!);
                 if (depositClient != null)
                 {
                     decimal depositAmount;
@@ -183,8 +235,23 @@ while (true)
                 break;
 
             case 8:
-                Console.WriteLine("Enter the account number for opening a loan (replenishment of the balance):");
-                var loanClient = bank.FindClientByAccountNumber(Console.ReadLine()!);
+
+                try
+                {
+                    Console.WriteLine("Enter the account number for opening a loan (replenishment of the balance):");
+                    accountNumber = Console.ReadLine();
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    {
+                        Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
+                        accountNumber = Console.ReadLine()!;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"An error while finding by account number. >>{e.Message}  {e.GetType}");
+                }
+                var loanClient = bank.FindClientByAccountNumber(accountNumber!);
+
                 if (loanClient != null)
                 {
                     decimal loanAmount;
