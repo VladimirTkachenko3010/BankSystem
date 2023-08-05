@@ -55,20 +55,18 @@ namespace Domain
         /// <param name="amount"></param>
         public override (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
         {
-            base.OpenDeposit(amount, msg);
-
+            var (balance, message) = base.OpenDeposit(amount, msg);
             //Additional logic for opening a deposit for legal entities
             // Changing the amount using random
             Random random = new();
             decimal randomFactor = random.Next(40, 61); // Random factor
             decimal modifiedAmount = amount * randomFactor / 100;
-
-            //Console.WriteLine($"Legal entity: changing deposit amount based on random factor: {randomFactor}%.");
-            //Console.WriteLine($"Legal entity: modified deposit amount: {amount + modifiedAmount} UAH.");
+            message += $"\nLegal entity: changing deposit amount based on random factor: {randomFactor}%.";
+            message += $"\nLegal entity: modified deposit amount: {amount + modifiedAmount} UAH.";
 
             // Change the balance to modifiedAmount
             Balance += modifiedAmount;
-            return (Balance, msg);
+            return (Balance, message);
         }
 
         /// <summary>

@@ -126,9 +126,7 @@ while (true)
                         }
                     } while (true);
 
-                    //need to fix console wrtiline message
-                    depositClient.OpenDeposit(depositAmount, msg);
-                    Console.WriteLine($"MESSAGE = {msg}");
+                    Console.WriteLine($"MESSAGE = {depositClient.OpenDeposit(depositAmount, msg).msg}");
                 }
                 else
                 {

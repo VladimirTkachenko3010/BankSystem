@@ -59,18 +59,18 @@ namespace Domain
         /// <param name="amount"></param>
         public override (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
         {
-            base.OpenDeposit(amount, msg);
+            var (balance, message) = base.OpenDeposit(amount, msg);
 
             // Additional logic for a regular client when opening a deposit
             // Change the amount using random
             Random random = new();
             decimal modifiedAmount = random.Next(-1000, 1000); // Random amount from -1000 to 1000
 
-            msg = $"Обычный клиент: открытие вклада с учетом рандома на сумму: {modifiedAmount} гривен.";
+            message += $"\nRegular client: opening a deposit, taking into account the random amount for the amount: {modifiedAmount} hryvnia.";
             // Change the balance to modifiedAmount
             Balance += modifiedAmount;
 
-            return (Balance, msg);
+            return (Balance, message);
         }
 
         /// <summary>
