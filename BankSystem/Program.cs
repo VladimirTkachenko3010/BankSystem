@@ -35,7 +35,7 @@ bank.AddClient(legalEntity);
 
 while (true)
 {
-    string input = Console.ReadLine();
+    string input = Console.ReadLine()!;
 
     if (int.TryParse(input, out int key))
     {
@@ -113,7 +113,7 @@ while (true)
 
             case 5:
                 Console.WriteLine("Enter the account number to delete:");
-                var removeClient = bank.FindClientByAccountNumber(Console.ReadLine());
+                var removeClient = bank.FindClientByAccountNumber(Console.ReadLine()!);
                 if (removeClient == null)
                 {
                     Console.WriteLine("Account not deleted, incorrect account number entry");
@@ -128,9 +128,9 @@ while (true)
             case 6:
 
                 Console.WriteLine("Enter the account number of the sender of funds:");
-                var sender = bank.FindClientByAccountNumber(Console.ReadLine());
+                var sender = bank.FindClientByAccountNumber(Console.ReadLine()!);
                 Console.WriteLine("Enter the account number of the recipient of funds:");
-                var recipient = bank.FindClientByAccountNumber(Console.ReadLine());
+                var recipient = bank.FindClientByAccountNumber(Console.ReadLine()!);
                 decimal transferAmount;
                 do
                 {
@@ -157,7 +157,7 @@ while (true)
 
             case 7:
                 Console.WriteLine("Enter the account number to open a deposit:");
-                var depositClient = bank.FindClientByAccountNumber(Console.ReadLine());
+                var depositClient = bank.FindClientByAccountNumber(Console.ReadLine()!);
                 if (depositClient != null)
                 {
                     decimal depositAmount;
@@ -184,7 +184,7 @@ while (true)
 
             case 8:
                 Console.WriteLine("Enter the account number for opening a loan (replenishment of the balance):");
-                var loanClient = bank.FindClientByAccountNumber(Console.ReadLine());
+                var loanClient = bank.FindClientByAccountNumber(Console.ReadLine()!);
                 if (loanClient != null)
                 {
                     decimal loanAmount;
