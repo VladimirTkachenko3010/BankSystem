@@ -139,7 +139,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number of the sender of funds:");
                     accountNumber = Console.ReadLine();
-                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    while (string.IsNullOrEmpty(accountNumber))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -155,7 +155,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number of the recipient of funds:");
                     accountNumber = Console.ReadLine();
-                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    while (string.IsNullOrEmpty(accountNumber))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -198,7 +198,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number to open a deposit:");
                     accountNumber = Console.ReadLine();
-                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    while (string.IsNullOrEmpty(accountNumber))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -240,7 +240,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number for opening a loan (replenishment of the balance):");
                     accountNumber = Console.ReadLine();
-                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
+                    while (string.IsNullOrEmpty(accountNumber))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
