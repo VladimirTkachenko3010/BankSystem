@@ -18,8 +18,8 @@ namespace Domain
         }
 
         private const decimal LegalEntityMinDep = 10000; // Minimum deposit amount for a legal entity
-        protected override decimal MinDepAmount => LegalEntityMinDep;
-        protected override decimal MinCreditAmount => 50000;  //Minimum loan amount
+        public override decimal MinDepAmount => LegalEntityMinDep;
+        public override decimal MinCreditAmount => 50000;  //Minimum loan amount
 
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace Domain
         /// deposit method for legal entities
         /// </summary>
         /// <param name="amount"></param>
-        public override (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
+        public override (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
         {
-            var (_, message) = base.OpenDeposit(amount, msg);
+            var (_, message) = base.OpenDeposit(depositClient, amount, msg);
             //Additional logic for opening a deposit for legal entities
             // Changing the amount using random
             Random random = new();

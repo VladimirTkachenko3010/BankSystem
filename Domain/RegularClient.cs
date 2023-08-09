@@ -20,8 +20,8 @@ namespace Domain
         }
 
         private const decimal RegularClientMinDepAmount = 1000; // Minimum deposit amount for a regular client
-        protected override decimal MinDepAmount => RegularClientMinDepAmount;
-        protected override decimal MinCreditAmount => 5000;  //Minimum loan amount
+        public override decimal MinDepAmount => RegularClientMinDepAmount;
+        public override decimal MinCreditAmount => 5000;  //Minimum loan amount
 
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace Domain
         /// deposit method for regular client
         /// </summary>
         /// <param name="amount"></param>
-        public override (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
+        public override (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
         {
-            var (_, message) = base.OpenDeposit(amount, msg);
+            var (_, message) = base.OpenDeposit(depositClient, amount, msg);
 
             // Additional logic for a regular client when opening a deposit
             // Change the amount using random

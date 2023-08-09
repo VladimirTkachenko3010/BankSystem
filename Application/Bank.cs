@@ -28,6 +28,19 @@ namespace Application
         /// <returns></returns>
         public T FindClientByAccountNumber(string accountNumber)
         {
+            ////need to move the exception to the menu
+            //try
+            //{
+            //    while (string.IsNullOrEmpty(accountNumber))
+            //    {
+            //        Console.WriteLine("Account number cannot be empty. Please enter right accout number:");
+            //        accountNumber = Console.ReadLine()!;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine($"An error while finding by account number. >>{e.Message}  {e.GetType}");
+            //}
             return clients.FirstOrDefault(c => c.AccountNumber == accountNumber)!;
         }
 
@@ -65,7 +78,7 @@ namespace Application
 
         public void Transfer(T sender, T recipient, decimal amount, string msg)
         {
-            sender.Transfer(recipient, amount, msg);
+            Transfer(sender, recipient, amount, msg);
         }
 
         public List<T> Clients

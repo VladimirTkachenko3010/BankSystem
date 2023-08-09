@@ -19,8 +19,8 @@ namespace Domain
         }
 
         private const decimal VipClientMinDep = 5000; // Minimum deposit amount for a VIP client
-        protected override decimal MinDepAmount => VipClientMinDep;
-        protected override decimal MinCreditAmount => 10000;  //Minimum loan amount
+        public override decimal MinDepAmount => VipClientMinDep;
+        public override decimal MinCreditAmount => 10000;  //Minimum loan amount
 
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace Domain
         /// deposit method for VIP clients
         /// </summary>
         /// <param name="amount"></param>
-        public override (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
+        public override (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
         {
-            var (_, message) = base.OpenDeposit(amount, msg);
+            var (_, message) = base.OpenDeposit(depositClient, amount, msg);
             message += $"\nVIP client: opening a deposit in the amount of {amount} hryvnias without randomization.";
             return (amount, message);
         }

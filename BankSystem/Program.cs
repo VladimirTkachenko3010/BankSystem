@@ -10,6 +10,7 @@ var bank = new Bank<Client>();
 var msg = string.Empty;
 var name = string.Empty;
 var accountNumber = string.Empty;
+var clientApp = new ClientApp();
 
 
 Console.WriteLine("1 - Display clients information");
@@ -139,7 +140,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number of the sender of funds:");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -155,7 +156,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number of the recipient of funds:");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -184,7 +185,7 @@ while (true)
 
                 if (sender != null)
                 {
-                    Console.WriteLine($"MESSAGE : \n{sender.Transfer(recipient, transferAmount, msg).msg}");
+                    Console.WriteLine($"MESSAGE : \n{clientApp.Transfer(sender, recipient, transferAmount, msg).msg}");
                 }
                 else
                 {
@@ -198,7 +199,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number to open a deposit:");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -226,7 +227,7 @@ while (true)
                         }
                     } while (true);
 
-                    Console.WriteLine($"MESSAGE : \n{depositClient.OpenDeposit(depositAmount, msg).msg}");
+                    Console.WriteLine($"MESSAGE : \n{clientApp.OpenDeposit(depositClient, depositAmount, msg).msg}");
                 }
                 else
                 {
@@ -240,7 +241,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number for opening a loan (replenishment of the balance):");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -268,7 +269,7 @@ while (true)
                         }
                     } while (true);
 
-                    Console.WriteLine($"MESSAGE : \n{loanClient.RequestLoan(loanAmount, msg).msg}");
+                    Console.WriteLine($"MESSAGE : \n{clientApp.RequestLoan(loanClient, loanAmount, msg).msg}");
                 }
                 else
                 {
