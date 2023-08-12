@@ -47,9 +47,9 @@ namespace Domain
         /// <param name="amount">deposit amount of money</param>
         /// <param name="msg">open deposit message</param>
         /// <returns></returns>
-        public virtual (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
+        public virtual decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
         {
-            return (Balance, string.Empty);
+            return Balance;
         }
 
         /// <summary>
@@ -57,11 +57,11 @@ namespace Domain
         /// </summary>
         /// <param name="loanClient">client</param>
         /// <param name="amount">loan amount</param>
-        /// <param name="msg">message after loan operation</param>
+        /// <param name="message">message after loan operation</param>
         /// <returns></returns>
-        public virtual (decimal Balance, string msg) RequestLoan(Client loanClient, decimal amount, string msg)
+        public virtual decimal RequestLoan(Client loanClient, decimal amount, StringBuilder message)
         {
-            return (Balance, string.Empty);
+            return Balance;
         }
 
         /// <summary>

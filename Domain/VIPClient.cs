@@ -37,11 +37,11 @@ namespace Domain
         /// deposit method for VIP clients
         /// </summary>
         /// <param name="amount"></param>
-        public override (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
+        public override decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
         {
-            var (_, message) = base.OpenDeposit(depositClient, amount, msg);
-            message += $"\nVIP client: opening a deposit in the amount of {amount} hryvnias without randomization.";
-            return (amount, message);
+            base.OpenDeposit(depositClient, amount, message);
+            message.Append($"\nVIP client: opening a deposit in the amount of {amount}%.\n");
+            return amount;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Domain
         protected override decimal CalcInterestRate()
         {
             // Generating a random interest rate in the range from 5% to 10%
-            Random random = new();
+            Random random = new Random();
             decimal interestRate = (decimal)(random.NextDouble() * (10 - 5) + 1);
             return interestRate;
         }

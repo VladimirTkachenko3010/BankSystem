@@ -38,20 +38,20 @@ namespace Domain
         /// deposit method for regular client
         /// </summary>
         /// <param name="amount"></param>
-        public override (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
+        public override decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
         {
-            var (_, message) = base.OpenDeposit(depositClient, amount, msg);
+            base.OpenDeposit(depositClient, amount, message);
 
             // Additional logic for a regular client when opening a deposit
             // Change the amount using random
-            Random random = new();
+            Random random = new Random();
             decimal modifiedAmount = random.Next(-1000, 1000); // Random amount from -1000 to 1000
 
-            message += $"\nRegular client: opening a deposit, taking into account the random amount for the amount: {modifiedAmount} hryvnia.";
+            message.Append($"\nRegular client: opening a deposit, taking into account the random amount for the amount: {modifiedAmount}%.\n");
             // Change the balance to modifiedAmount
             Balance += modifiedAmount;
 
-            return (Balance, message);
+            return Balance;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Domain
         protected override decimal CalcInterestRate()
         {
             // Generating a random interest rate ranging from 1% to 5% for a regular client
-            Random random = new();
+            Random random = new Random();
             decimal interestRate = (decimal)(random.NextDouble() * (5 - 1) + 1);
             return interestRate;
         }

@@ -52,7 +52,7 @@ namespace Application
         {
             const int accountNumberLength = 5;
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // symbols for acc number
-            Random random = new();
+            Random random = new Random();
             string accountNumber;
 
             do
@@ -76,9 +76,9 @@ namespace Application
             clients.Remove(client);
         }
 
-        public void Transfer(T sender, T recipient, decimal amount, string msg)
+        public void Transfer(T sender, T recipient, decimal amount, StringBuilder message)
         {
-            Transfer(sender, recipient, amount, msg);
+            Transfer(sender, recipient, amount, message);
         }
 
         public List<T> Clients

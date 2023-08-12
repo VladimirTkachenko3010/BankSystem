@@ -35,20 +35,21 @@ namespace Domain
         /// deposit method for legal entities
         /// </summary>
         /// <param name="amount"></param>
-        public override (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
+        public override decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
         {
-            var (_, message) = base.OpenDeposit(depositClient, amount, msg);
+            //var (_, message) = base.OpenDeposit(depositClient, amount, message);
+            base.OpenDeposit(depositClient, amount, message);
+
             //Additional logic for opening a deposit for legal entities
             // Changing the amount using random
-            Random random = new();
+            Random random = new Random();
             decimal randomFactor = random.Next(40, 61); // Random factor
             decimal modifiedAmount = amount * randomFactor / 100;
-            message += $"\nLegal entity: changing deposit amount based on random factor: {randomFactor}%.";
-            message += $"\nLegal entity: modified deposit amount: {amount + modifiedAmount} UAH.";
+            message.Append($"\nLegal entity: changing deposit amount based on random factor: {randomFactor}%.\nLegal entity: modified deposit amount: {amount + modifiedAmount} UAH.");
 
             // Change the balance to modifiedAmount
             Balance += modifiedAmount;
-            return (Balance, message);
+            return Balance;
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Domain
         protected override decimal CalcInterestRate()
         {
             // Generating a random interest rate in the range from 3% to 7%
-            Random random = new();
+            Random random = new Random();
             decimal interestRate = (decimal)(random.NextDouble() * (7 - 3) + 1);
             return interestRate;
         }

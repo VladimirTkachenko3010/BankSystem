@@ -7,7 +7,7 @@ using Domain;
 using Application;
 
 var bank = new Bank<Client>();
-var msg = string.Empty;
+var message = new StringBuilder();
 var name = string.Empty;
 var accountNumber = string.Empty;
 var clientApp = new ClientApp();
@@ -185,7 +185,9 @@ while (true)
 
                 if (sender != null)
                 {
-                    Console.WriteLine($"MESSAGE : \n{clientApp.Transfer(sender, recipient, transferAmount, msg).msg}");
+                    message.Clear();
+                    clientApp.Transfer(sender, recipient, transferAmount, message);
+                    Console.WriteLine($"MESSAGE : {message}");
                 }
                 else
                 {
@@ -226,8 +228,9 @@ while (true)
                             Console.WriteLine("Incorrect value of the deposit amount. Please enter a valid number.");
                         }
                     } while (true);
-
-                    Console.WriteLine($"MESSAGE : \n{clientApp.OpenDeposit(depositClient, depositAmount, msg).msg}");
+                    message.Clear();
+                    clientApp.OpenDeposit(depositClient, depositAmount, message);
+                    Console.WriteLine($"MESSAGE : \n{message}");
                 }
                 else
                 {
@@ -268,8 +271,9 @@ while (true)
                             Console.WriteLine("Incorrect value of the loan amount. Please enter a valid number.");
                         }
                     } while (true);
-
-                    Console.WriteLine($"MESSAGE : \n{clientApp.RequestLoan(loanClient, loanAmount, msg).msg}");
+                    message.Clear();
+                    clientApp.RequestLoan(loanClient, loanAmount, message);
+                    Console.WriteLine($"MESSAGE : \n{message}");
                 }
                 else
                 {

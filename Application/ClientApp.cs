@@ -15,9 +15,9 @@ namespace Application
         /// <param name="sender">sender of money</param>
         /// <param name="reciepent">receiepent of money</param>
         /// <param name="amount">transfer money amount</param>
-        /// <param name="msg">transfer message</param>
+        /// <param name="message">transfer message</param>
         /// <returns></returns>
-        public virtual (decimal Balance, string msg) Transfer(Client sender, Client reciepent, decimal amount, string msg)
+        public virtual decimal Transfer(Client sender, Client reciepent, decimal amount, StringBuilder message)
         {
             if (reciepent != null)
             {
@@ -25,18 +25,18 @@ namespace Application
                 {
                     sender.Balance -= amount;
                     reciepent.Balance += amount;
-                    msg = $"The transfer of {amount} hryvnias was completed successfully.";
+                    message.Append($"The transfer of {amount} hryvnias was completed successfully.");
                 }
                 else
                 {
-                    msg = "Unfortunately, there are insufficient funds in the account.";
+                    message.Append("Unfortunately, there are insufficient funds in the account.");
                 }
-                return (reciepent.Balance, msg);
+                return reciepent.Balance;
             }
             else
             {
-                msg = "The recipient with the specified account number was not found.";
-                return (sender.Balance, msg);
+                message.Append("The recipient with the specified account number was not found.");
+                return sender.Balance;
             }
         }
 
@@ -46,14 +46,14 @@ namespace Application
         /// </summary>
         /// <param name="depositClient">client</param>
         /// <param name="amount">deposit amount of money</param>
-        /// <param name="msg">open deposit message</param>
+        /// <param name="message">open deposit message</param>
         /// <returns></returns>
-        public (decimal Balance, string msg) OpenDeposit(Client depositClient, decimal amount, string msg)
+        public decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
         {
             if (amount < depositClient.MinDepAmount)
             {
-                msg = $"Insufficient deposit opening amount. Minimum amount = {depositClient.MinDepAmount}";
-                return (0, msg);
+                message.Append($"Insufficient deposit opening amount. Minimum amount = {depositClient.MinDepAmount}");
+                return 0;
             }
 
             //generation of a unique deposit number
@@ -63,10 +63,8 @@ namespace Application
             //Balance update
             depositClient.Balance += amount;
 
-            msg = $"A deposit of {amount} hryvnias has been successfully opened.\n"
-                + $"Interest rate: {interestRate}.\n"
-                + $"Deposit number: {depNumber}.";
-            return (depositClient.Balance, msg);
+            message.Append($"A deposit of {amount} hryvnias has been successfully opened.\nInterest rate: {interestRate}.\nDeposit number: {depNumber}.");
+            return depositClient.Balance;
         }
 
 
@@ -75,15 +73,15 @@ namespace Application
         /// </summary>
         /// <param name="loanClient">client</param>
         /// <param name="amount">loan amount</param>
-        /// <param name="msg">message after loan operation</param>
+        /// <param name="message">message after loan operation</param>
         /// <returns></returns>
-        public (decimal Balance, string msg) RequestLoan(Client loanClient, decimal amount, string msg)
+        public decimal RequestLoan(Client loanClient, decimal amount, StringBuilder message)
         {
 
             if (amount < loanClient.MinCreditAmount)
             {
-                msg = $"Insufficient amount for issuing a loan. Minimum amount = {loanClient.MinCreditAmount}";
-                return (loanClient.Balance, msg);
+                message.Append($"Insufficient amount for issuing a loan. Minimum amount = {loanClient.MinCreditAmount}");
+                return loanClient.Balance;
             }
             decimal interestRate = CalcInterestRate();
             string loanNumber = GenerateDepLoanNumber();
@@ -91,10 +89,8 @@ namespace Application
             //Balance update
             loanClient.Balance += amount;
 
-            msg = $"Credit for the amount of {amount} hryvnias has been successfully issued.\n"
-                + $"Interest rate: {interestRate}%.\n"
-                + $"Loan number: {loanNumber}";
-            return (loanClient.Balance, msg);
+            message.Append($"Credit for the amount of {amount} hryvnias has been successfully issued.\nInterest rate: {interestRate}%.\nLoan number: {loanNumber}");
+            return loanClient.Balance;
         }
 
 
