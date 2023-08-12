@@ -23,11 +23,11 @@ Console.WriteLine("7 - Opening deposits");
 Console.WriteLine("8 - Opening credits");
 
 #region creating test clients
-var client1 = new RegularClient("REGULAR_John", Bank<Client>.GenerateUniqueAccountNumber());
-var client2 = new VIPClient("VIP_Alice", Bank<Client>.GenerateUniqueAccountNumber());
-var regularClient = new RegularClient("REGULAR_Иван", Bank<Client>.GenerateUniqueAccountNumber());
-var vipClient = new VIPClient("VIP_Анна", Bank<Client>.GenerateUniqueAccountNumber());
-var legalEntity = new LegalEntity("ООО \"Finance\"", Bank<Client>.GenerateUniqueAccountNumber());
+var client1 = new RegularClient("REGULAR_John", bank.GenerateUniqueAccountNumber());
+var client2 = new VIPClient("VIP_Alice", bank.GenerateUniqueAccountNumber());
+var regularClient = new RegularClient("REGULAR_Иван", bank.GenerateUniqueAccountNumber());
+var vipClient = new VIPClient("VIP_Анна", bank.GenerateUniqueAccountNumber());
+var legalEntity = new LegalEntity("ООО \"Finance\"", bank.GenerateUniqueAccountNumber());
 bank.AddClient(client1);
 bank.AddClient(client2);
 bank.AddClient(regularClient);
@@ -71,7 +71,7 @@ while (true)
                 {
                     Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
                 }
-                bank.AddClient(RegularClient.CreateRegularClient(name!, Bank<Client>.GenerateUniqueAccountNumber()));
+                bank.AddClient(RegularClient.CreateRegularClient(name!, bank.GenerateUniqueAccountNumber()));
                 break;
 
             case 3:
@@ -90,7 +90,7 @@ while (true)
                 {
                     Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
                 }
-                bank.AddClient(VIPClient.CreateVIPClient(name!, Bank<Client>.GenerateUniqueAccountNumber()));
+                bank.AddClient(VIPClient.CreateVIPClient(name!, bank.GenerateUniqueAccountNumber()));
                 break;
 
             case 4:
@@ -110,7 +110,7 @@ while (true)
                 {
                     Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
                 }
-                bank.AddClient(LegalEntity.CreateLegalEntity(name!, Bank<Client>.GenerateUniqueAccountNumber()));
+                bank.AddClient(LegalEntity.CreateLegalEntity(name!, bank.GenerateUniqueAccountNumber()));
                 break;
 
             case 5:

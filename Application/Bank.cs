@@ -14,7 +14,7 @@ namespace Application
     public class Bank<T> where T : Client
     {
         private readonly List<T> clients;
-        private static readonly HashSet<string> usedAccountNumbers = new();
+        private readonly List<string> usedAccountNumbers = new();
 
         public Bank()
         {
@@ -48,7 +48,7 @@ namespace Application
         /// generation unique acc number method
         /// </summary>
         /// <returns></returns>
-        public static string GenerateUniqueAccountNumber()
+        public string GenerateUniqueAccountNumber()
         {
             const int accountNumberLength = 5;
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // symbols for acc number
