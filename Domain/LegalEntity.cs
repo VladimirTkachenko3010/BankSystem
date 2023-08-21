@@ -18,8 +18,8 @@ namespace Domain
         }
 
         private const decimal LegalEntityMinDep = 10000; // Minimum deposit amount for a legal entity
-        protected override decimal MinDepAmount => LegalEntityMinDep;
-        protected override decimal MinCreditAmount => 50000;  //Minimum loan amount
+        public override decimal MinDepAmount => LegalEntityMinDep;
+        public override decimal MinCreditAmount => 50000;  //Minimum loan amount
 
 
         /// <summary>
@@ -35,33 +35,33 @@ namespace Domain
         /// deposit method for legal entities
         /// </summary>
         /// <param name="amount"></param>
-        public override (decimal Balance, string msg) OpenDeposit(decimal amount, string msg)
+        public override decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
         {
-            var (_, message) = base.OpenDeposit(amount, msg);
+            //var (_, message) = base.OpenDeposit(depositClient, amount, message);
+            base.OpenDeposit(depositClient, amount, message);
+
             //Additional logic for opening a deposit for legal entities
             // Changing the amount using random
-            Random random = new();
+            var random = new Random();
             decimal randomFactor = random.Next(40, 61); // Random factor
-            decimal modifiedAmount = amount * randomFactor / 100;
-            message += $"\nLegal entity: changing deposit amount based on random factor: {randomFactor}%.";
-            message += $"\nLegal entity: modified deposit amount: {amount + modifiedAmount} UAH.";
+            var modifiedAmount = amount * randomFactor / 100;
+            message.Append($"\nLegal entity: changing deposit amount based on random factor: {randomFactor}%.\nLegal entity: modified deposit amount: {amount + modifiedAmount} UAH.");
 
             // Change the balance to modifiedAmount
             Balance += modifiedAmount;
-            return (Balance, message);
+            return Balance;
         }
 
-        /// <summary>
-        /// Interest rate for legal entities
-        /// </summary>
-        /// <returns></returns>
-        protected override decimal CalcInterestRate()
-        {
-            // Generating a random interest rate in the range from 3% to 7%
-            Random random = new();
-            decimal interestRate = (decimal)(random.NextDouble() * (7 - 3) + 1);
-            return interestRate;
-        }
+        ///// <summary>
+        ///// Interest rate for legal entities
+        ///// </summary>
+        ///// <returns></returns>
+        //protected override decimal CalcInterestRate()
+        //{
+        //    var random = new Random();
+        //    var interestRate = (decimal)(random.NextDouble() * (7 - 3) + 1);
+        //    return interestRate;
+        //}
 
     }
 }

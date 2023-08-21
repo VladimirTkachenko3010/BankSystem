@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 using Application;
+using Application.Services.Interfaces;
+using Application.Services;
 
 var bank = new Bank<Client>();
-var msg = string.Empty;
+var message = new StringBuilder();
 var name = string.Empty;
 var accountNumber = string.Empty;
+var clientApp = new ClientApp();
+var vipClientApp = new VipClientApp(new ClientService());
 
 
 Console.WriteLine("1 - Display clients information");
@@ -22,11 +26,11 @@ Console.WriteLine("7 - Opening deposits");
 Console.WriteLine("8 - Opening credits");
 
 #region creating test clients
-var client1 = new RegularClient("REGULAR_John", Bank<Client>.GenerateUniqueAccountNumber());
-var client2 = new VIPClient("VIP_Alice", Bank<Client>.GenerateUniqueAccountNumber());
-var regularClient = new RegularClient("REGULAR_Иван", Bank<Client>.GenerateUniqueAccountNumber());
-var vipClient = new VIPClient("VIP_Анна", Bank<Client>.GenerateUniqueAccountNumber());
-var legalEntity = new LegalEntity("ООО \"Finance\"", Bank<Client>.GenerateUniqueAccountNumber());
+var client1 = new RegularClient("REGULAR_John", bank.GenerateUniqueAccountNumber());
+var client2 = new VIPClient("VIP_Alice", bank.GenerateUniqueAccountNumber());
+var regularClient = new RegularClient("REGULAR_Иван", bank.GenerateUniqueAccountNumber());
+var vipClient = new VIPClient("VIP_Анна", bank.GenerateUniqueAccountNumber());
+var legalEntity = new LegalEntity("ООО \"Finance\"", bank.GenerateUniqueAccountNumber());
 bank.AddClient(client1);
 bank.AddClient(client2);
 bank.AddClient(regularClient);
@@ -36,7 +40,7 @@ bank.AddClient(legalEntity);
 
 while (true)
 {
-    string input = Console.ReadLine()!;
+    var input = Console.ReadLine()!;
 
     if (int.TryParse(input, out int key))
     {
@@ -70,7 +74,7 @@ while (true)
                 {
                     Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
                 }
-                bank.AddClient(RegularClient.CreateRegularClient(name!, Bank<Client>.GenerateUniqueAccountNumber()));
+                bank.AddClient(RegularClient.CreateRegularClient(name!, bank.GenerateUniqueAccountNumber()));
                 break;
 
             case 3:
@@ -89,7 +93,7 @@ while (true)
                 {
                     Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
                 }
-                bank.AddClient(VIPClient.CreateVIPClient(name!, Bank<Client>.GenerateUniqueAccountNumber()));
+                bank.AddClient(VIPClient.CreateVIPClient(name!, bank.GenerateUniqueAccountNumber()));
                 break;
 
             case 4:
@@ -109,7 +113,7 @@ while (true)
                 {
                     Console.WriteLine($"An error occurred while reading input. >>{e.Message}  {e.GetType}");
                 }
-                bank.AddClient(LegalEntity.CreateLegalEntity(name!, Bank<Client>.GenerateUniqueAccountNumber()));
+                bank.AddClient(LegalEntity.CreateLegalEntity(name!, bank.GenerateUniqueAccountNumber()));
                 break;
 
             case 5:
@@ -123,8 +127,11 @@ while (true)
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
                     }
-                    bank.RemoveClient(bank.FindClientByAccountNumber(accountNumber!));
-                    Console.WriteLine("Account deleted");
+
+                    if (bank.RemoveClient(bank.FindClientByAccountNumber(accountNumber!)))
+                        Console.WriteLine("Account deleted");
+                    else
+                        Console.WriteLine("No availible client found to delete");
                 }
                 catch (Exception e)
                 {
@@ -139,7 +146,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number of the sender of funds:");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -155,7 +162,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number of the recipient of funds:");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -184,7 +191,9 @@ while (true)
 
                 if (sender != null)
                 {
-                    Console.WriteLine($"MESSAGE : \n{sender.Transfer(recipient, transferAmount, msg).msg}");
+                    message.Clear();
+                    clientApp.Transfer(sender, recipient, transferAmount, message);
+                    Console.WriteLine($"MESSAGE : {message}");
                 }
                 else
                 {
@@ -198,7 +207,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number to open a deposit:");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -225,8 +234,11 @@ while (true)
                             Console.WriteLine("Incorrect value of the deposit amount. Please enter a valid number.");
                         }
                     } while (true);
-
-                    Console.WriteLine($"MESSAGE : \n{depositClient.OpenDeposit(depositAmount, msg).msg}");
+                    message.Clear();
+                    var clientResponse = vipClientApp.OpenDeposit(depositClient, depositAmount, message);
+                    Console.WriteLine($"MESSAGE1 : \n{clientResponse.Message}");
+                    //clientApp.OpenDeposit(depositClient, depositAmount, message);
+                    Console.WriteLine($"MESSAGE2 : \n{message}");
                 }
                 else
                 {
@@ -240,7 +252,7 @@ while (true)
                 {
                     Console.WriteLine("Enter the account number for opening a loan (replenishment of the balance):");
                     accountNumber = Console.ReadLine();
-                    while (string.IsNullOrEmpty(accountNumber))
+                    while ((string.IsNullOrEmpty(accountNumber)) && (bank.FindClientByAccountNumber(accountNumber!) == null))
                     {
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
@@ -267,8 +279,9 @@ while (true)
                             Console.WriteLine("Incorrect value of the loan amount. Please enter a valid number.");
                         }
                     } while (true);
-
-                    Console.WriteLine($"MESSAGE : \n{loanClient.RequestLoan(loanAmount, msg).msg}");
+                    message.Clear();
+                    clientApp.RequestLoan(loanClient, loanAmount, message);
+                    Console.WriteLine($"MESSAGE : \n{message}");
                 }
                 else
                 {

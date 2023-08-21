@@ -14,7 +14,9 @@ namespace Application
     public class Bank<T> where T : Client
     {
         private readonly List<T> clients;
-        private static readonly HashSet<string> usedAccountNumbers = new();
+        private readonly List<string> usedAccountNumbers = new();
+        const int accountNumberLength = 5;
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // symbols for acc number
 
         public Bank()
         {
@@ -28,6 +30,19 @@ namespace Application
         /// <returns></returns>
         public T FindClientByAccountNumber(string accountNumber)
         {
+            ////need to move the exception to the menu
+            //try
+            //{
+            //    while (string.IsNullOrEmpty(accountNumber))
+            //    {
+            //        Console.WriteLine("Account number cannot be empty. Please enter right accout number:");
+            //        accountNumber = Console.ReadLine()!;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine($"An error while finding by account number. >>{e.Message}  {e.GetType}");
+            //}
             return clients.FirstOrDefault(c => c.AccountNumber == accountNumber)!;
         }
 
@@ -35,12 +50,10 @@ namespace Application
         /// generation unique acc number method
         /// </summary>
         /// <returns></returns>
-        public static string GenerateUniqueAccountNumber()
+        public string GenerateUniqueAccountNumber()
         {
-            const int accountNumberLength = 5;
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // symbols for acc number
-            Random random = new();
-            string accountNumber;
+            var random = new Random();
+            var accountNumber = string.Empty;
 
             do
             {
@@ -58,14 +71,22 @@ namespace Application
             clients.Add(client);
         }
 
-        public void RemoveClient(T client)
+        public bool RemoveClient(T client)
         {
-            clients.Remove(client);
+            if (clients.Contains(client))
+            {
+                clients.Remove(client);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public void Transfer(T sender, T recipient, decimal amount, string msg)
+        public void Transfer(T sender, T recipient, decimal amount, StringBuilder message)
         {
-            sender.Transfer(recipient, amount, msg);
+            Transfer(sender, recipient, amount, message);
         }
 
         public List<T> Clients
