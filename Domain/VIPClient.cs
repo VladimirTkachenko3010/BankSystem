@@ -33,28 +33,27 @@ namespace Domain
         }
 
 
-        /// <summary>
-        /// deposit method for VIP clients
-        /// </summary>
-        /// <param name="amount"></param>
-        public override decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
-        {
-            base.OpenDeposit(depositClient, amount, message);
-            message.Append($"\nVIP client: opening a deposit in the amount of {amount}%.\n");
-            return amount;
-        }
+        ///// <summary>
+        ///// deposit method for VIP clients FROM VIPCLIENT CS
+        ///// </summary>
+        ///// <param name="amount"></param>
+        //public override decimal OpenDeposit(Client depositClient, decimal amount, StringBuilder message)
+        //{
+        //    //base.OpenDeposit(depositClient, amount, message);
+        //    //message.Append($"\nVIP client: opening a deposit in the amount of {amount}%.\n");
+        //    return amount;
+        //}
 
-        /// <summary>
-        /// interest rate for VIP
-        /// </summary>
-        /// <returns></returns>
-        protected override decimal CalcInterestRate()
-        {
-            // Generating a random interest rate in the range from 5% to 10%
-            Random random = new Random();
-            decimal interestRate = (decimal)(random.NextDouble() * (10 - 5) + 1);
-            return interestRate;
-        }
+        ///// <summary>
+        ///// interest rate for VIP
+        ///// </summary>
+        ///// <returns></returns>
+        //protected override decimal CalcInterestRate()
+        //{
+        //    var random = new Random();
+        //    decimal interestRate = (decimal)(random.NextDouble() * (10 - 5) + 1);
+        //    return interestRate;
+        //}
 
     }
 }

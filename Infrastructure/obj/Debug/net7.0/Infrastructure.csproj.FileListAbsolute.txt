@@ -1,7 +1,6 @@
 C:\Users\Владимир\Desktop\Work\Git_Examples\BankSystem\Infrastructure\bin\Debug\net7.0\Infrastructure.deps.json
 C:\Users\Владимир\Desktop\Work\Git_Examples\BankSystem\Infrastructure\bin\Debug\net7.0\Infrastructure.dll
 C:\Users\Владимир\Desktop\Work\Git_Examples\BankSystem\Infrastructure\bin\Debug\net7.0\Infrastructure.pdb
-C:\Users\Владимир\Desktop\Work\Git_Examples\BankSystem\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.AssemblyReference.cache
 C:\Users\Владимир\Desktop\Work\Git_Examples\BankSystem\Infrastructure\obj\Debug\net7.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Владимир\Desktop\Work\Git_Examples\BankSystem\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfoInputs.cache
 C:\Users\Владимир\Desktop\Work\Git_Examples\BankSystem\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfo.cs

@@ -58,7 +58,7 @@ namespace Application
 
             //generation of a unique deposit number
             string depNumber = GenerateDepLoanNumber();
-            decimal interestRate = CalcInterestRate();
+            decimal interestRate = CalcInterestRate(depositClient);
 
             //Balance update
             depositClient.Balance += amount;
@@ -83,7 +83,7 @@ namespace Application
                 message.Append($"Insufficient amount for issuing a loan. Minimum amount = {loanClient.MinCreditAmount}");
                 return loanClient.Balance;
             }
-            decimal interestRate = CalcInterestRate();
+            decimal interestRate = CalcInterestRate(loanClient);
             string loanNumber = GenerateDepLoanNumber();
 
             //Balance update
@@ -98,7 +98,7 @@ namespace Application
         /// Base calculation of Interest Rate
         /// </summary>
         /// <returns></returns>
-        protected decimal CalcInterestRate()
+        protected decimal CalcInterestRate(Client client)
         {
             return 0;
         }

@@ -42,9 +42,9 @@ namespace Domain
 
             //Additional logic for opening a deposit for legal entities
             // Changing the amount using random
-            Random random = new Random();
+            var random = new Random();
             decimal randomFactor = random.Next(40, 61); // Random factor
-            decimal modifiedAmount = amount * randomFactor / 100;
+            var modifiedAmount = amount * randomFactor / 100;
             message.Append($"\nLegal entity: changing deposit amount based on random factor: {randomFactor}%.\nLegal entity: modified deposit amount: {amount + modifiedAmount} UAH.");
 
             // Change the balance to modifiedAmount
@@ -52,17 +52,16 @@ namespace Domain
             return Balance;
         }
 
-        /// <summary>
-        /// Interest rate for legal entities
-        /// </summary>
-        /// <returns></returns>
-        protected override decimal CalcInterestRate()
-        {
-            // Generating a random interest rate in the range from 3% to 7%
-            Random random = new Random();
-            decimal interestRate = (decimal)(random.NextDouble() * (7 - 3) + 1);
-            return interestRate;
-        }
+        ///// <summary>
+        ///// Interest rate for legal entities
+        ///// </summary>
+        ///// <returns></returns>
+        //protected override decimal CalcInterestRate()
+        //{
+        //    var random = new Random();
+        //    var interestRate = (decimal)(random.NextDouble() * (7 - 3) + 1);
+        //    return interestRate;
+        //}
 
     }
 }

@@ -15,6 +15,8 @@ namespace Application
     {
         private readonly List<T> clients;
         private readonly List<string> usedAccountNumbers = new();
+        const int accountNumberLength = 5;
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // symbols for acc number
 
         public Bank()
         {
@@ -50,10 +52,8 @@ namespace Application
         /// <returns></returns>
         public string GenerateUniqueAccountNumber()
         {
-            const int accountNumberLength = 5;
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // symbols for acc number
-            Random random = new Random();
-            string accountNumber;
+            var random = new Random();
+            var accountNumber = string.Empty;
 
             do
             {
@@ -71,9 +71,17 @@ namespace Application
             clients.Add(client);
         }
 
-        public void RemoveClient(T client)
+        public bool RemoveClient(T client)
         {
-            clients.Remove(client);
+            if (clients.Contains(client))
+            {
+                clients.Remove(client);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void Transfer(T sender, T recipient, decimal amount, StringBuilder message)

@@ -64,14 +64,14 @@ namespace Domain
             return Balance;
         }
 
-        /// <summary>
-        /// virtual calculation of Interest Rate
-        /// </summary>
-        /// <returns></returns>
-        protected virtual decimal CalcInterestRate()
-        {
-            return 0;
-        }
+        ///// <summary>
+        ///// virtual calculation of Interest Rate
+        ///// </summary>
+        ///// <returns></returns>
+        //protected virtual decimal CalcInterestRate()
+        //{
+        //    return 0;
+        //}
 
         /// <summary>
         /// virtual generation of deposit or loan number

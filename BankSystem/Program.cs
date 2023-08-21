@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 using Application;
+using Application.Services.Interfaces;
+using Application.Services;
 
 var bank = new Bank<Client>();
 var message = new StringBuilder();
 var name = string.Empty;
 var accountNumber = string.Empty;
 var clientApp = new ClientApp();
+var vipClientApp = new VipClientApp(new ClientService());
 
 
 Console.WriteLine("1 - Display clients information");
@@ -37,7 +40,7 @@ bank.AddClient(legalEntity);
 
 while (true)
 {
-    string input = Console.ReadLine()!;
+    var input = Console.ReadLine()!;
 
     if (int.TryParse(input, out int key))
     {
@@ -124,8 +127,11 @@ while (true)
                         Console.WriteLine("Incorrect account number entry. Please enter right accout number:");
                         accountNumber = Console.ReadLine()!;
                     }
-                    bank.RemoveClient(bank.FindClientByAccountNumber(accountNumber!));
-                    Console.WriteLine("Account deleted");
+
+                    if (bank.RemoveClient(bank.FindClientByAccountNumber(accountNumber!)))
+                        Console.WriteLine("Account deleted");
+                    else
+                        Console.WriteLine("No availible client found to delete");
                 }
                 catch (Exception e)
                 {
@@ -229,8 +235,10 @@ while (true)
                         }
                     } while (true);
                     message.Clear();
-                    clientApp.OpenDeposit(depositClient, depositAmount, message);
-                    Console.WriteLine($"MESSAGE : \n{message}");
+                    var clientResponse = vipClientApp.OpenDeposit(depositClient, depositAmount, message);
+                    Console.WriteLine($"MESSAGE1 : \n{clientResponse.Message}");
+                    //clientApp.OpenDeposit(depositClient, depositAmount, message);
+                    Console.WriteLine($"MESSAGE2 : \n{message}");
                 }
                 else
                 {
